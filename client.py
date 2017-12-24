@@ -27,7 +27,8 @@ def get_connection(host_IP, port_num):
     :return: socket fd for client's connection with server
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # IPv4
-    sock.settimeout(2)
+    sock.settimeout(2)  # 当访问一个socket，如果经过了参数设定的时间后，什么都没有发生，则会产生一个socket.timeout异常。
+    # 例如：当程序运行后，会等待数据传入。在另一终端，利用telnet连接12345端口。连接成功后，显示“连接来自：****”，如果此时5秒内，终端未进行输入，系统会提示连接超时退出。
     # connect to remote host
     try:
         sock.connect((host_IP, port_num))
