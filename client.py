@@ -76,6 +76,6 @@ if __name__ == "__main__":
         sys.exit()
     host = sys.argv[1]
     port = int(sys.argv[2])
-    client_sock = get_connection()
+    client_sock = get_connection(host, port)
     prompt_prefix()
     keep_chatting()
