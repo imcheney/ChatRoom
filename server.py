@@ -2,7 +2,6 @@
 """
 server
 """
-
 import socket
 import select
 
@@ -58,10 +57,13 @@ if __name__ == "__main__":
                 try:
                     data = sock.recv(RECV_BUFFER_SIZE)
                     if data:
-                        broadcast_data(sock, "\r" + '<' + str(sock.getpeername()) + '> ' + data)
-                except:
-                    broadcast_data(sock, "Client (%s:%s) is offline" % new_addr)
-                    print "Client (%s:%s) is offline" % new_addr
+                        if data.strip() in ('exit' or 'quit'):
+                            raise Exception
+                        else:
+                            broadcast_data(sock, "\r" + '<' + str(sock.getpeername()) + '> ' + data)
+                except Exception as e:
+                    broadcast_data(sock, "Client %s is offline\n" % sock)
+                    print "Client %s is offline" % sock
                     sock.close()
                     conn_list.remove(sock)
                     continue
